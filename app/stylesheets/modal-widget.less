@@ -1,0 +1,128 @@
+.modal-container{
+  opacity: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: fixed;
+  z-index: 1050;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transition: opacity .15s linear;
+  width: 1300px;
+  top: 15px;
+  transition: transform .3s ease-out,-webkit-transform .3s ease-out;
+  margin: 0px auto;
+}
+
+.modal-content-area{
+  width: 100%;
+  margin: 30px auto;
+}
+
+
+.modal-content .glyphicon-chevron-right,
+.modal-content .glyphicon-chevron-left {
+  font-size: 42px;
+}
+.modal-content-transparent{
+  background-color: transparent;
+}
+
+.modal-form{
+  width: 70%;
+  height: 93vh;
+  color: #5F5858;
+  margin: 0px auto;
+}
+
+.modal-form label{
+  font-weight: normal;
+}
+
+.modal-form .setting-sizes{
+    text-align: left;
+}
+
+.modal-form .setting-sizes input{
+
+
+}
+
+.modal-form .setting-colors,
+.modal-form .setting-dimensions{
+    margin-top: 50px;
+}
+
+.modal-form .setting-colors input {
+  width: 76%;
+}
+
+.modal-form .setting-colors {
+  text-align: left;
+}
+
+.modal-form .save-btn{
+  margin-top: 5%;
+}
+
+.modal-form .modal-header > .close{
+  color: black;
+  opacity: 1;
+  font-size: 30px;
+  position: relative;
+  left: 0px;
+  bottom: 10px;
+}
+
+.modal-header > .close{
+  color: white;
+  opacity: 1;
+  font-size: 30px;
+  position: relative;
+  left: -177px;
+ bottom: 20px;
+}
+
+.modal-header{
+  border-bottom: none;
+}
+
+.modal-form .modal-header{
+  margin-bottom: 2%;
+  font-size: 23px;
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.modal-anim-enter {
+    opacity: 0.00;
+    transform: scale(0.7);
+    transition: all 0.2s;
+}
+
+.modal-anim-enter.modal-anim-enter-active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.modal-anim-leave {
+    opacity: 1;
+    transform: scale(1);
+    transition: all 0.2s;
+}
+
+.modal-anim-leave.modal-anim-leave-active {
+    opacity: 0.00;
+    transform: scale(0.7);
+}

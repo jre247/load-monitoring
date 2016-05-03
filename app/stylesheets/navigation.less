@@ -1,0 +1,38 @@
+
+.Navigation-link {
+  display: inline-block;
+  padding: 3px 8px;
+  text-decoration: none;
+  font-size: 1.125em; /* ~18px */
+}
+
+.Navigation-link,
+.Navigation-link:active,
+.Navigation-link:visited {
+  color: white;
+  margin-right: 16px;
+  font-family: @navigation-font-family;
+  font-size: 22px;
+}
+
+.Navigation-link:visited {
+  font-weight: bold;
+}
+
+.Navigation-link:hover {
+  font-weight: bold;
+}
+
+.Navigation-link--highlight {
+  margin-right: 8px;
+  margin-left: 8px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, .15);
+  color: white;
+  font-weight: bold;
+}
+
+.Navigation-link--highlight:hover {
+  background: rgba(0, 0, 0, .3);
+  font-weight: bold;
+}
