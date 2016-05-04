@@ -36,11 +36,8 @@ class Header extends React.Component {
             <Navigation className="Header-nav" history={this.props.history} />
           </div>
           <div className="Header-brand" >
-            <span className="Header-brandTxt">JASON & JENNA</span>
+            <span className="Header-brandTxt">Load Monitor</span>
           </div>
-
-          <h2>November 5, 2016</h2>
-
 
         </div>
       </div>
