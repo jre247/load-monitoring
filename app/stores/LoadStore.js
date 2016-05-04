@@ -11,7 +11,7 @@ class LoadStore {
   }
 
   getLoadFail(jqXhr){
-    onsole.log('onGetLoadFail');
+    onsole.log('Load failed.');
     toastr.error(jqXhr.responseJSON.message);
   }
 }

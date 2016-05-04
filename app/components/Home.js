@@ -9,6 +9,10 @@ class Home extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
 
+  onChange(state) {
+    this.setState(state);
+  }
+  
   componentDidMount() {
      LoadStore.listen(this.onChange);
      LoadActions.getLoad();
@@ -16,10 +20,6 @@ class Home extends React.Component {
 
   componentWillUnmount() {
     LoadStore.unlisten(this.onChange);
-  }
-
-  onChange(state) {
-    this.setState(state);
   }
 
   render() {

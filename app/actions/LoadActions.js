@@ -4,7 +4,7 @@ import {assign} from 'underscore';
 class LoadActions {
   constructor() {
     this.generateActions(
-      'getLoad'
+      'getLoadSuccess'
     );
   }
 
@@ -16,7 +16,7 @@ class LoadActions {
         this.actions.getLoadSuccess(data);
       })
       .fail((jqXhr) => {
-        this.actions.getALoadFail(jqXhr);
+        this.actions.getLoadFail(jqXhr);
       });
   }
 }
