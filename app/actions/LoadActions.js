@@ -7,6 +7,18 @@ class LoadActions {
       'getLoad'
     );
   }
+
+  getLoad() {
+    $.ajax({
+      url: '/api/load'
+    })
+      .done((data) => {
+        this.actions.getLoadSuccess(data);
+      })
+      .fail((jqXhr) => {
+        this.actions.getALoadFail(jqXhr);
+      });
+  }
 }
 
 export default alt.createActions(LoadActions);

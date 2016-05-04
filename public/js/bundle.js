@@ -43,7 +43,53 @@ var FooterActions = function () {
 
 exports.default = _alt2.default.createActions(FooterActions);
 
-},{"../alt":2}],2:[function(require,module,exports){
+},{"../alt":3}],2:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _alt = require('../alt');
+
+var _alt2 = _interopRequireDefault(_alt);
+
+var _underscore = require('underscore');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var LoadActions = function () {
+  function LoadActions() {
+    _classCallCheck(this, LoadActions);
+
+    this.generateActions('getLoad');
+  }
+
+  _createClass(LoadActions, [{
+    key: 'getLoad',
+    value: function getLoad() {
+      var _this = this;
+
+      $.ajax({
+        url: '/api/load'
+      }).done(function (data) {
+        _this.actions.getLoadSuccess(data);
+      }).fail(function (jqXhr) {
+        _this.actions.getALoadFail(jqXhr);
+      });
+    }
+  }]);
+
+  return LoadActions;
+}();
+
+exports.default = _alt2.default.createActions(LoadActions);
+
+},{"../alt":3,"underscore":"underscore"}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -58,7 +104,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = new _alt2.default();
 
-},{"alt":"alt"}],3:[function(require,module,exports){
+},{"alt":"alt"}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -135,7 +181,7 @@ var Footer = function (_React$Component) {
 
 exports.default = Footer;
 
-},{"../actions/FooterActions":1,"../stores/FooterStore":10,"react":"react","react-router":"react-router"}],4:[function(require,module,exports){
+},{"../actions/FooterActions":1,"../stores/FooterStore":11,"react":"react","react-router":"react-router"}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -226,8 +272,8 @@ var Header = function (_React$Component) {
 
 exports.default = Header;
 
-},{"./Navigation":6,"react":"react","react-router":"react-router"}],5:[function(require,module,exports){
-"use strict";
+},{"./Navigation":7,"react":"react","react-router":"react-router"}],6:[function(require,module,exports){
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -235,9 +281,17 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _LoadStore = require('../stores/LoadStore');
+
+var _LoadStore2 = _interopRequireDefault(_LoadStore);
+
+var _LoadActions = require('../actions/LoadActions');
+
+var _LoadActions2 = _interopRequireDefault(_LoadActions);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -255,32 +309,38 @@ var Home = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Home).call(this, props));
 
+    _this.state = _LoadStore2.default.getState();
     _this.onChange = _this.onChange.bind(_this);
     return _this;
   }
 
   _createClass(Home, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {}
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      _LoadStore2.default.listen(this.onChange);
+      _LoadActions2.default.getLoad();
+    }
   }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {}
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      _LoadStore2.default.unlisten(this.onChange);
+    }
   }, {
-    key: "onChange",
+    key: 'onChange',
     value: function onChange(state) {
       this.setState(state);
     }
   }, {
-    key: "render",
+    key: 'render',
     value: function render() {
 
       return _react2.default.createElement(
-        "div",
-        { className: "Home-content" },
+        'div',
+        { className: 'Home-content' },
         _react2.default.createElement(
-          "h3",
+          'h3',
           null,
-          "Load Monitor"
+          'Load Monitor'
         )
       );
     }
@@ -291,7 +351,7 @@ var Home = function (_React$Component) {
 
 exports.default = Home;
 
-},{"react":"react"}],6:[function(require,module,exports){
+},{"../actions/LoadActions":2,"../stores/LoadStore":12,"react":"react"}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -358,7 +418,7 @@ var Navbar = function (_React$Component) {
 
 exports.default = Navbar;
 
-},{"react":"react","react-router":"react-router","underscore":"underscore"}],7:[function(require,module,exports){
+},{"react":"react","react-router":"react-router","underscore":"underscore"}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -424,7 +484,7 @@ var App = function (_React$Component) {
 
 exports.default = App;
 
-},{"./Footer":3,"./Header":4,"react":"react"}],8:[function(require,module,exports){
+},{"./Footer":4,"./Header":5,"react":"react"}],9:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -457,7 +517,7 @@ _reactDom2.default.render(_react2.default.createElement(
   _routes2.default
 ), document.getElementById('app'));
 
-},{"./routes":9,"history/lib/createBrowserHistory":17,"react":"react","react-dom":"react-dom","react-router":"react-router"}],9:[function(require,module,exports){
+},{"./routes":10,"history/lib/createBrowserHistory":19,"react":"react","react-dom":"react-dom","react-router":"react-router"}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -486,7 +546,7 @@ exports.default = _react2.default.createElement(
   _react2.default.createElement(_reactRouter.Route, { path: '/', component: _Home2.default })
 );
 
-},{"./components/Home":5,"./components/app":7,"react":"react","react-router":"react-router"}],10:[function(require,module,exports){
+},{"./components/Home":6,"./components/app":8,"react":"react","react-router":"react-router"}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -524,7 +584,54 @@ var FooterStore = function FooterStore() {
 
 exports.default = _alt2.default.createStore(FooterStore);
 
-},{"../actions/FooterActions":1,"../alt":2}],11:[function(require,module,exports){
+},{"../actions/FooterActions":1,"../alt":3}],12:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _alt = require('../alt');
+
+var _alt2 = _interopRequireDefault(_alt);
+
+var _LoadActions = require('../actions/LoadActions');
+
+var _LoadActions2 = _interopRequireDefault(_LoadActions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var LoadStore = function () {
+  function LoadStore() {
+    _classCallCheck(this, LoadStore);
+
+    this.bindActions(_LoadActions2.default);
+    this.load = {};
+  }
+
+  _createClass(LoadStore, [{
+    key: 'getLoadSuccess',
+    value: function getLoadSuccess(load) {
+      this.load = load;
+    }
+  }, {
+    key: 'getLoadFail',
+    value: function getLoadFail(jqXhr) {
+      onsole.log('onGetLoadFail');
+      toastr.error(jqXhr.responseJSON.message);
+    }
+  }]);
+
+  return LoadStore;
+}();
+
+exports.default = _alt2.default.createStore(LoadStore);
+
+},{"../actions/LoadActions":2,"../alt":3}],13:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -617,7 +724,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],12:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /**
  * Indicates that navigation was caused by a call to history.push.
  */
@@ -649,7 +756,7 @@ exports['default'] = {
   REPLACE: REPLACE,
   POP: POP
 };
-},{}],13:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -676,7 +783,7 @@ function loopAsync(turns, work, callback) {
 
   next();
 }
-},{}],14:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 (function (process){
 /*eslint-disable no-empty */
 'use strict';
@@ -747,7 +854,7 @@ function readState(key) {
   return null;
 }
 }).call(this,require('_process'))
-},{"_process":11,"warning":29}],15:[function(require,module,exports){
+},{"_process":13,"warning":31}],17:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -823,13 +930,13 @@ function supportsGoWithoutReloadUsingHash() {
   var ua = navigator.userAgent;
   return ua.indexOf('Firefox') === -1;
 }
-},{}],16:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
 var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 exports.canUseDOM = canUseDOM;
-},{}],17:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -1004,7 +1111,7 @@ function createBrowserHistory() {
 exports['default'] = createBrowserHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./Actions":12,"./DOMStateStorage":14,"./DOMUtils":15,"./ExecutionEnvironment":16,"./createDOMHistory":18,"_process":11,"invariant":28}],18:[function(require,module,exports){
+},{"./Actions":14,"./DOMStateStorage":16,"./DOMUtils":17,"./ExecutionEnvironment":18,"./createDOMHistory":20,"_process":13,"invariant":30}],20:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -1047,7 +1154,7 @@ function createDOMHistory(options) {
 exports['default'] = createDOMHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./DOMUtils":15,"./ExecutionEnvironment":16,"./createHistory":19,"_process":11,"invariant":28}],19:[function(require,module,exports){
+},{"./DOMUtils":17,"./ExecutionEnvironment":18,"./createHistory":21,"_process":13,"invariant":30}],21:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1318,7 +1425,7 @@ function createHistory() {
 
 exports['default'] = createHistory;
 module.exports = exports['default'];
-},{"./Actions":12,"./AsyncUtils":13,"./createLocation":20,"./deprecate":21,"./runTransitionHook":24,"deep-equal":25}],20:[function(require,module,exports){
+},{"./Actions":14,"./AsyncUtils":15,"./createLocation":22,"./deprecate":23,"./runTransitionHook":26,"deep-equal":27}],22:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1355,7 +1462,7 @@ function createLocation() {
 
 exports['default'] = createLocation;
 module.exports = exports['default'];
-},{"./Actions":12,"./parsePath":23}],21:[function(require,module,exports){
+},{"./Actions":14,"./parsePath":25}],23:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -1377,7 +1484,7 @@ function deprecate(fn, message) {
 exports['default'] = deprecate;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":11,"warning":29}],22:[function(require,module,exports){
+},{"_process":13,"warning":31}],24:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -1391,7 +1498,7 @@ function extractPath(string) {
 
 exports["default"] = extractPath;
 module.exports = exports["default"];
-},{}],23:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -1438,7 +1545,7 @@ function parsePath(path) {
 exports['default'] = parsePath;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./extractPath":22,"_process":11,"warning":29}],24:[function(require,module,exports){
+},{"./extractPath":24,"_process":13,"warning":31}],26:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -1465,7 +1572,7 @@ function runTransitionHook(hook, location, callback) {
 exports['default'] = runTransitionHook;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":11,"warning":29}],25:[function(require,module,exports){
+},{"_process":13,"warning":31}],27:[function(require,module,exports){
 var pSlice = Array.prototype.slice;
 var objectKeys = require('./lib/keys.js');
 var isArguments = require('./lib/is_arguments.js');
@@ -1561,7 +1668,7 @@ function objEquiv(a, b, opts) {
   return typeof a === typeof b;
 }
 
-},{"./lib/is_arguments.js":26,"./lib/keys.js":27}],26:[function(require,module,exports){
+},{"./lib/is_arguments.js":28,"./lib/keys.js":29}],28:[function(require,module,exports){
 var supportsArgumentsClass = (function(){
   return Object.prototype.toString.call(arguments)
 })() == '[object Arguments]';
@@ -1583,7 +1690,7 @@ function unsupported(object){
     false;
 };
 
-},{}],27:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 exports = module.exports = typeof Object.keys === 'function'
   ? Object.keys : shim;
 
@@ -1594,7 +1701,7 @@ function shim (obj) {
   return keys;
 }
 
-},{}],28:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -1649,7 +1756,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":11}],29:[function(require,module,exports){
+},{"_process":13}],31:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -1713,4 +1820,4 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"_process":11}]},{},[8]);
+},{"_process":13}]},{},[9]);
