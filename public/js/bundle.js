@@ -256,7 +256,10 @@ var Home = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       _LoadStore2.default.listen(this.onChange);
-      _LoadActions2.default.getLoad();
+
+      setInterval(function () {
+        _LoadActions2.default.getLoad();
+      }, 2000);
     }
   }, {
     key: 'componentWillUnmount',
@@ -505,13 +508,13 @@ var LoadStore = function () {
     _classCallCheck(this, LoadStore);
 
     this.bindActions(_LoadActions2.default);
-    this.load = {};
+    this.loadHistory = [];
   }
 
   _createClass(LoadStore, [{
     key: 'getLoadSuccess',
     value: function getLoadSuccess(load) {
-      this.load = load;
+      this.loadHistory.push(load);
     }
   }, {
     key: 'getLoadFail',

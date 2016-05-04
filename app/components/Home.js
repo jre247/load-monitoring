@@ -15,7 +15,10 @@ class Home extends React.Component {
   
   componentDidMount() {
      LoadStore.listen(this.onChange);
-     LoadActions.getLoad();
+     
+     setInterval(function(){
+       LoadActions.getLoad();
+     }, 2000);  
   }
 
   componentWillUnmount() {
