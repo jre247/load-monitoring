@@ -25,7 +25,7 @@ class Navbar extends React.Component {
     return (
       <div>
         <div className='Navigation' role="navigation">
-            <Link className="Navigation-link" to="/">Home</Link>
+            <Link className="Navigation-link" to="/">Load</Link>
         </div>
       </div>
     );

@@ -234,20 +234,20 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Home = function (_React$Component) {
-  _inherits(Home, _React$Component);
+var Load = function (_React$Component) {
+  _inherits(Load, _React$Component);
 
-  function Home(props) {
-    _classCallCheck(this, Home);
+  function Load(props) {
+    _classCallCheck(this, Load);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Home).call(this, props));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Load).call(this, props));
 
     _this.state = _LoadStore2.default.getState();
     _this.onChange = _this.onChange.bind(_this);
     return _this;
   }
 
-  _createClass(Home, [{
+  _createClass(Load, [{
     key: 'onChange',
     value: function onChange(state) {
       this.setState(state);
@@ -269,23 +269,44 @@ var Home = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var loadHistory = this.state.loadHistory.map(function (load, index) {
+        return _react2.default.createElement(
+          'div',
+          { key: index, className: 'row' },
+          _react2.default.createElement(
+            'div',
+            { className: 'col-md-4' },
+            load.time
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-md-4' },
+            load.uptime
+          )
+        );
+      });
 
       return _react2.default.createElement(
         'div',
-        { className: 'Home-content' },
+        { className: 'Load-content' },
         _react2.default.createElement(
           'h3',
           null,
           'Load Monitor'
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          loadHistory
         )
       );
     }
   }]);
 
-  return Home;
+  return Load;
 }(_react2.default.Component);
 
-exports.default = Home;
+exports.default = Load;
 
 },{"../actions/LoadActions":1,"../stores/LoadStore":10,"react":"react"}],6:[function(require,module,exports){
 'use strict';
@@ -342,7 +363,7 @@ var Navbar = function (_React$Component) {
           _react2.default.createElement(
             _reactRouter.Link,
             { className: 'Navigation-link', to: '/' },
-            'Home'
+            'Load'
           )
         )
       );
@@ -470,19 +491,19 @@ var _app = require('./components/app');
 
 var _app2 = _interopRequireDefault(_app);
 
-var _Home = require('./components/Home');
+var _Load = require('./components/Load');
 
-var _Home2 = _interopRequireDefault(_Home);
+var _Load2 = _interopRequireDefault(_Load);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _react2.default.createElement(
   _reactRouter.Route,
   { component: _app2.default },
-  _react2.default.createElement(_reactRouter.Route, { path: '/', component: _Home2.default })
+  _react2.default.createElement(_reactRouter.Route, { path: '/', component: _Load2.default })
 );
 
-},{"./components/Home":5,"./components/app":7,"react":"react","react-router":"react-router"}],10:[function(require,module,exports){
+},{"./components/Load":5,"./components/app":7,"react":"react","react-router":"react-router"}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
