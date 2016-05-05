@@ -1,5 +1,5 @@
 import alt from '../alt';
-import LoadActions from '../actions/LoadActions';
+import LoadActions from '../actions/loadActions';
 
 class LoadStore {
   constructor() {

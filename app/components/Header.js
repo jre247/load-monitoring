@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-import Navigation from './Navigation';
+import Navigation from './navigation';
 
 class Header extends React.Component {
   constructor(props) {

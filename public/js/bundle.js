@@ -72,6 +72,188 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _footer = require('./footer');
+
+var _footer2 = _interopRequireDefault(_footer);
+
+var _header = require('./header');
+
+var _header2 = _interopRequireDefault(_header);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var App = function (_React$Component) {
+  _inherits(App, _React$Component);
+
+  function App(props) {
+    _classCallCheck(this, App);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
+  }
+
+  _createClass(App, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {}
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {}
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'div',
+          { className: 'App-container' },
+          _react2.default.createElement(_header2.default, null),
+          this.props.children,
+          _react2.default.createElement(_footer2.default, null)
+        )
+      );
+    }
+  }]);
+
+  return App;
+}(_react2.default.Component);
+
+exports.default = App;
+
+},{"./footer":5,"./header":6,"react":"react"}],4:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _utilities = require('../utilities');
+
+var _utilities2 = _interopRequireDefault(_utilities);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var D3Chart = require('react-d3-core').Chart;
+var D3LineChart = require('react-d3-basic').LineChart;
+
+var Chart = function (_React$Component) {
+  _inherits(Chart, _React$Component);
+
+  function Chart(props) {
+    _classCallCheck(this, Chart);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(Chart).call(this, props));
+  }
+
+  _createClass(Chart, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.renderLineChart();
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps() {
+      this.renderLineChart();
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {}
+  }, {
+    key: 'renderLineChart',
+    value: function renderLineChart() {
+      var self = this;
+      var data = this.props.data;
+
+      var width = 700,
+          height = 300,
+          margins = { left: 100, right: 100, top: 50, bottom: 50 },
+          title = self.props.title,
+
+      // chart series,
+      // field: is what field your data want to be selected
+      // name: the name of the field that display in legend
+      // color: what color is the line
+      chartSeries = [{
+        field: self.props.y,
+        name: _utilities2.default.capitalizeFirstLetter(self.props.y),
+        color: self.props.color || '#ff7f0e'
+      }],
+
+      // your x accessor
+      x = function x(d) {
+        return d[self.props.x];
+      };
+
+      _reactDom2.default.render(_react2.default.createElement(
+        D3Chart,
+        {
+          title: "Taiwan refuse disposal",
+          width: width,
+          height: height,
+          margins: margins
+        },
+        _react2.default.createElement(D3LineChart, {
+          margins: margins,
+          title: "Taiwan refuse disposal",
+          data: data,
+          width: width,
+          height: height,
+          chartSeries: chartSeries,
+          x: x,
+          xScale: "time"
+        })
+      ), document.getElementById('line-chart'));
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { id: 'line-chart' },
+        ' '
+      );
+    }
+  }]);
+
+  return Chart;
+}(_react2.default.Component);
+
+exports.default = Chart;
+
+},{"../utilities":12,"react":"react","react-d3-basic":41,"react-d3-core":115,"react-dom":"react-dom"}],5:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
 var _reactRouter = require('react-router');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -114,7 +296,7 @@ var Footer = function (_React$Component) {
 
 exports.default = Footer;
 
-},{"react":"react","react-router":"react-router"}],4:[function(require,module,exports){
+},{"react":"react","react-router":"react-router"}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -129,9 +311,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
-var _Navigation = require('./Navigation');
+var _navigation = require('./navigation');
 
-var _Navigation2 = _interopRequireDefault(_Navigation);
+var _navigation2 = _interopRequireDefault(_navigation);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -184,7 +366,7 @@ var Header = function (_React$Component) {
           _react2.default.createElement(
             'div',
             null,
-            _react2.default.createElement(_Navigation2.default, { className: 'Header-nav', history: this.props.history })
+            _react2.default.createElement(_navigation2.default, { className: 'Header-nav', history: this.props.history })
           ),
           _react2.default.createElement(
             'div',
@@ -205,7 +387,7 @@ var Header = function (_React$Component) {
 
 exports.default = Header;
 
-},{"./Navigation":6,"react":"react","react-router":"react-router"}],5:[function(require,module,exports){
+},{"./navigation":8,"react":"react","react-router":"react-router"}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -218,17 +400,17 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _LoadStore = require('../stores/LoadStore');
+var _loadStore = require('../stores/loadStore');
 
-var _LoadStore2 = _interopRequireDefault(_LoadStore);
+var _loadStore2 = _interopRequireDefault(_loadStore);
 
-var _LoadActions = require('../actions/LoadActions');
+var _loadActions = require('../actions/loadActions');
 
-var _LoadActions2 = _interopRequireDefault(_LoadActions);
+var _loadActions2 = _interopRequireDefault(_loadActions);
 
-var _reactDom = require('react-dom');
+var _chart = require('./chart');
 
-var _reactDom2 = _interopRequireDefault(_reactDom);
+var _chart2 = _interopRequireDefault(_chart);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -238,9 +420,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Chart = require('react-d3-core').Chart;
-var LineChart = require('react-d3-basic').LineChart;
-
 var Load = function (_React$Component) {
   _inherits(Load, _React$Component);
 
@@ -249,7 +428,7 @@ var Load = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Load).call(this, props));
 
-    _this.state = _LoadStore2.default.getState();
+    _this.state = _loadStore2.default.getState();
     _this.onChange = _this.onChange.bind(_this);
     return _this;
   }
@@ -262,67 +441,21 @@ var Load = function (_React$Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      _LoadStore2.default.listen(this.onChange);
+      _loadStore2.default.listen(this.onChange);
 
       setInterval(function () {
-        _LoadActions2.default.getLoad();
+        _loadActions2.default.getLoad();
       }, 2000);
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      _LoadStore2.default.unlisten(this.onChange);
-    }
-  }, {
-    key: 'renderLineChart',
-    value: function renderLineChart() {
-      var data = this.state.loadHistory;
-      if (!data) return null;
-
-      var width = 700,
-          height = 300,
-          margins = { left: 100, right: 100, top: 50, bottom: 50 },
-          title = "User sample",
-
-      // chart series,
-      // field: is what field your data want to be selected
-      // name: the name of the field that display in legend
-      // color: what color is the line
-      chartSeries = [{
-        field: 'uptime',
-        name: 'uptime',
-        color: '#ff7f0e'
-      }],
-
-      // your x accessor
-      x = function x(d) {
-        return d.index;
-      };
-
-      _reactDom2.default.render(_react2.default.createElement(
-        Chart,
-        {
-          title: "Taiwan refuse disposal",
-          width: width,
-          height: height,
-          margins: margins
-        },
-        _react2.default.createElement(LineChart, {
-          margins: margins,
-          title: "Taiwan refuse disposal",
-          data: data,
-          width: width,
-          height: height,
-          chartSeries: chartSeries,
-          x: x,
-          xScale: "time"
-        })
-      ), document.getElementById('line-chart'));
+      _loadStore2.default.unlisten(this.onChange);
     }
   }, {
     key: 'render',
     value: function render() {
-      this.renderLineChart();
+      if (this.state.loadHistory.length == 0) return null;
 
       var loadHistory = this.state.loadHistory.map(function (load, index) {
         return _react2.default.createElement(
@@ -330,16 +463,18 @@ var Load = function (_React$Component) {
           { key: index, className: 'row' },
           _react2.default.createElement(
             'div',
-            { className: 'col-md-4' },
+            { className: 'col-md-6' },
             load.time
           ),
           _react2.default.createElement(
             'div',
-            { className: 'col-md-4' },
+            { className: 'col-md-6' },
             load.uptime
           )
         );
       });
+
+      var propsData = { data: this.state.loadHistory, x: "time", y: "uptime", title: "Load" };
 
       return _react2.default.createElement(
         'div',
@@ -351,13 +486,21 @@ var Load = function (_React$Component) {
         ),
         _react2.default.createElement(
           'div',
-          null,
-          loadHistory
-        ),
-        _react2.default.createElement(
-          'div',
-          { id: 'line-chart' },
-          ' '
+          { className: 'row' },
+          _react2.default.createElement(
+            'div',
+            { className: 'col-md-6' },
+            loadHistory
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-md-6' },
+            _react2.default.createElement(
+              _chart2.default,
+              propsData,
+              ' '
+            )
+          )
         )
       );
     }
@@ -368,7 +511,7 @@ var Load = function (_React$Component) {
 
 exports.default = Load;
 
-},{"../actions/LoadActions":1,"../stores/LoadStore":10,"react":"react","react-d3-basic":39,"react-d3-core":113,"react-dom":"react-dom"}],6:[function(require,module,exports){
+},{"../actions/loadActions":1,"../stores/loadStore":11,"./chart":4,"react":"react"}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -435,73 +578,7 @@ var Navbar = function (_React$Component) {
 
 exports.default = Navbar;
 
-},{"react":"react","react-router":"react-router","underscore":"underscore"}],7:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Footer = require('./Footer');
-
-var _Footer2 = _interopRequireDefault(_Footer);
-
-var _Header = require('./Header');
-
-var _Header2 = _interopRequireDefault(_Header);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var App = function (_React$Component) {
-  _inherits(App, _React$Component);
-
-  function App(props) {
-    _classCallCheck(this, App);
-
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
-  }
-
-  _createClass(App, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {}
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {}
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'div',
-          { className: 'App-container' },
-          _react2.default.createElement(_Header2.default, null),
-          this.props.children,
-          _react2.default.createElement(_Footer2.default, null)
-        )
-      );
-    }
-  }]);
-
-  return App;
-}(_react2.default.Component);
-
-exports.default = App;
-
-},{"./Footer":3,"./Header":4,"react":"react"}],8:[function(require,module,exports){
+},{"react":"react","react-router":"react-router","underscore":"underscore"}],9:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -534,7 +611,7 @@ _reactDom2.default.render(_react2.default.createElement(
   _routes2.default
 ), document.getElementById('app'));
 
-},{"./routes":9,"history/lib/createBrowserHistory":17,"react":"react","react-dom":"react-dom","react-router":"react-router"}],9:[function(require,module,exports){
+},{"./routes":10,"history/lib/createBrowserHistory":19,"react":"react","react-dom":"react-dom","react-router":"react-router"}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -551,19 +628,19 @@ var _app = require('./components/app');
 
 var _app2 = _interopRequireDefault(_app);
 
-var _Load = require('./components/Load');
+var _load = require('./components/load');
 
-var _Load2 = _interopRequireDefault(_Load);
+var _load2 = _interopRequireDefault(_load);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _react2.default.createElement(
   _reactRouter.Route,
   { component: _app2.default },
-  _react2.default.createElement(_reactRouter.Route, { path: '/', component: _Load2.default })
+  _react2.default.createElement(_reactRouter.Route, { path: '/', component: _load2.default })
 );
 
-},{"./components/Load":5,"./components/app":7,"react":"react","react-router":"react-router"}],10:[function(require,module,exports){
+},{"./components/app":3,"./components/load":7,"react":"react","react-router":"react-router"}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -576,9 +653,9 @@ var _alt = require('../alt');
 
 var _alt2 = _interopRequireDefault(_alt);
 
-var _LoadActions = require('../actions/LoadActions');
+var _loadActions = require('../actions/loadActions');
 
-var _LoadActions2 = _interopRequireDefault(_LoadActions);
+var _loadActions2 = _interopRequireDefault(_loadActions);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -588,7 +665,7 @@ var LoadStore = function () {
   function LoadStore() {
     _classCallCheck(this, LoadStore);
 
-    this.bindActions(_LoadActions2.default);
+    this.bindActions(_loadActions2.default);
     this.loadHistory = [];
   }
 
@@ -610,7 +687,35 @@ var LoadStore = function () {
 
 exports.default = _alt2.default.createStore(LoadStore);
 
-},{"../actions/LoadActions":1,"../alt":2}],11:[function(require,module,exports){
+},{"../actions/loadActions":1,"../alt":2}],12:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Utilities = function () {
+  function Utilities() {
+    _classCallCheck(this, Utilities);
+  }
+
+  _createClass(Utilities, null, [{
+    key: "capitalizeFirstLetter",
+    value: function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+  }]);
+
+  return Utilities;
+}();
+
+exports.default = Utilities;
+
+},{}],13:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -703,7 +808,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],12:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /**
  * Indicates that navigation was caused by a call to history.push.
  */
@@ -735,7 +840,7 @@ exports['default'] = {
   REPLACE: REPLACE,
   POP: POP
 };
-},{}],13:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -762,7 +867,7 @@ function loopAsync(turns, work, callback) {
 
   next();
 }
-},{}],14:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 (function (process){
 /*eslint-disable no-empty */
 'use strict';
@@ -833,7 +938,7 @@ function readState(key) {
   return null;
 }
 }).call(this,require('_process'))
-},{"_process":11,"warning":29}],15:[function(require,module,exports){
+},{"_process":13,"warning":31}],17:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -909,13 +1014,13 @@ function supportsGoWithoutReloadUsingHash() {
   var ua = navigator.userAgent;
   return ua.indexOf('Firefox') === -1;
 }
-},{}],16:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
 var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 exports.canUseDOM = canUseDOM;
-},{}],17:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -1090,7 +1195,7 @@ function createBrowserHistory() {
 exports['default'] = createBrowserHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./Actions":12,"./DOMStateStorage":14,"./DOMUtils":15,"./ExecutionEnvironment":16,"./createDOMHistory":18,"_process":11,"invariant":28}],18:[function(require,module,exports){
+},{"./Actions":14,"./DOMStateStorage":16,"./DOMUtils":17,"./ExecutionEnvironment":18,"./createDOMHistory":20,"_process":13,"invariant":30}],20:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -1133,7 +1238,7 @@ function createDOMHistory(options) {
 exports['default'] = createDOMHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./DOMUtils":15,"./ExecutionEnvironment":16,"./createHistory":19,"_process":11,"invariant":28}],19:[function(require,module,exports){
+},{"./DOMUtils":17,"./ExecutionEnvironment":18,"./createHistory":21,"_process":13,"invariant":30}],21:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1404,7 +1509,7 @@ function createHistory() {
 
 exports['default'] = createHistory;
 module.exports = exports['default'];
-},{"./Actions":12,"./AsyncUtils":13,"./createLocation":20,"./deprecate":21,"./runTransitionHook":24,"deep-equal":25}],20:[function(require,module,exports){
+},{"./Actions":14,"./AsyncUtils":15,"./createLocation":22,"./deprecate":23,"./runTransitionHook":26,"deep-equal":27}],22:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1441,7 +1546,7 @@ function createLocation() {
 
 exports['default'] = createLocation;
 module.exports = exports['default'];
-},{"./Actions":12,"./parsePath":23}],21:[function(require,module,exports){
+},{"./Actions":14,"./parsePath":25}],23:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -1463,7 +1568,7 @@ function deprecate(fn, message) {
 exports['default'] = deprecate;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":11,"warning":29}],22:[function(require,module,exports){
+},{"_process":13,"warning":31}],24:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -1477,7 +1582,7 @@ function extractPath(string) {
 
 exports["default"] = extractPath;
 module.exports = exports["default"];
-},{}],23:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -1524,7 +1629,7 @@ function parsePath(path) {
 exports['default'] = parsePath;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./extractPath":22,"_process":11,"warning":29}],24:[function(require,module,exports){
+},{"./extractPath":24,"_process":13,"warning":31}],26:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -1551,7 +1656,7 @@ function runTransitionHook(hook, location, callback) {
 exports['default'] = runTransitionHook;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":11,"warning":29}],25:[function(require,module,exports){
+},{"_process":13,"warning":31}],27:[function(require,module,exports){
 var pSlice = Array.prototype.slice;
 var objectKeys = require('./lib/keys.js');
 var isArguments = require('./lib/is_arguments.js');
@@ -1647,7 +1752,7 @@ function objEquiv(a, b, opts) {
   return typeof a === typeof b;
 }
 
-},{"./lib/is_arguments.js":26,"./lib/keys.js":27}],26:[function(require,module,exports){
+},{"./lib/is_arguments.js":28,"./lib/keys.js":29}],28:[function(require,module,exports){
 var supportsArgumentsClass = (function(){
   return Object.prototype.toString.call(arguments)
 })() == '[object Arguments]';
@@ -1669,7 +1774,7 @@ function unsupported(object){
     false;
 };
 
-},{}],27:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 exports = module.exports = typeof Object.keys === 'function'
   ? Object.keys : shim;
 
@@ -1680,7 +1785,7 @@ function shim (obj) {
   return keys;
 }
 
-},{}],28:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -1735,7 +1840,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":11}],29:[function(require,module,exports){
+},{"_process":13}],31:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -1799,7 +1904,7 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"_process":11}],30:[function(require,module,exports){
+},{"_process":13}],32:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1904,7 +2009,7 @@ AreaChart.propTypes = {
 };
 exports.default = AreaChart;
 module.exports = exports['default'];
-},{"./commonProps":38,"react":"react","react-d3-core":62,"react-d3-shape":83}],31:[function(require,module,exports){
+},{"./commonProps":40,"react":"react","react-d3-core":64,"react-d3-shape":85}],33:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2008,7 +2113,7 @@ AreaStackChart.propTypes = {
 };
 exports.default = AreaStackChart;
 module.exports = exports['default'];
-},{"./commonProps":38,"react":"react","react-d3-core":62,"react-d3-shape":83}],32:[function(require,module,exports){
+},{"./commonProps":40,"react":"react","react-d3-core":64,"react-d3-shape":85}],34:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2114,7 +2219,7 @@ BarChart.propTypes = {
 };
 exports.default = BarChart;
 module.exports = exports['default'];
-},{"./commonProps":38,"react":"react","react-d3-core":62,"react-d3-shape":83}],33:[function(require,module,exports){
+},{"./commonProps":40,"react":"react","react-d3-core":64,"react-d3-shape":85}],35:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2220,7 +2325,7 @@ BarGroupChart.propTypes = {
 };
 exports.default = BarGroupChart;
 module.exports = exports['default'];
-},{"./commonProps":38,"react":"react","react-d3-core":62,"react-d3-shape":83}],34:[function(require,module,exports){
+},{"./commonProps":40,"react":"react","react-d3-core":64,"react-d3-shape":85}],36:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2325,7 +2430,7 @@ BarGroupHorizontalChart.propTypes = {
 };
 exports.default = BarGroupHorizontalChart;
 module.exports = exports['default'];
-},{"./commonProps":38,"react":"react","react-d3-core":62,"react-d3-shape":83}],35:[function(require,module,exports){
+},{"./commonProps":40,"react":"react","react-d3-core":64,"react-d3-shape":85}],37:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2430,7 +2535,7 @@ BarHorizontalChart.propTypes = {
 };
 exports.default = BarHorizontalChart;
 module.exports = exports['default'];
-},{"./commonProps":38,"react":"react","react-d3-core":62,"react-d3-shape":83}],36:[function(require,module,exports){
+},{"./commonProps":40,"react":"react","react-d3-core":64,"react-d3-shape":85}],38:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2537,7 +2642,7 @@ BarStackChart.propTypes = {
 };
 exports.default = BarStackChart;
 module.exports = exports['default'];
-},{"./commonProps":38,"react":"react","react-d3-core":62,"react-d3-shape":83}],37:[function(require,module,exports){
+},{"./commonProps":40,"react":"react","react-d3-core":64,"react-d3-shape":85}],39:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2643,7 +2748,7 @@ BarStackChart.propTypes = {
 };
 exports.default = BarStackChart;
 module.exports = exports['default'];
-},{"./commonProps":38,"react":"react","react-d3-core":62,"react-d3-shape":83}],38:[function(require,module,exports){
+},{"./commonProps":40,"react":"react","react-d3-core":64,"react-d3-shape":85}],40:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2700,7 +2805,7 @@ var pieProps = exports.pieProps = {
   categoricalColors: _d3Scale2.default.scaleCategory10(),
   pieSort: _d3Array2.default.descending
 };
-},{"d3-array":43,"d3-scale":44}],39:[function(require,module,exports){
+},{"d3-array":45,"d3-scale":46}],41:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2766,7 +2871,7 @@ exports.AreaStackChart = _area_stack2.default;
 exports.BarStackChart = _bar_stack2.default;
 exports.BarStackHorizontalChart = _bar_stack_horizontal2.default;
 exports.PieChart = _pie2.default;
-},{"./area":30,"./area_stack":31,"./bar":32,"./bar_group":33,"./bar_group_horizontal":34,"./bar_horizontal":35,"./bar_stack":36,"./bar_stack_horizontal":37,"./line":40,"./pie":41,"./scatter":42}],40:[function(require,module,exports){
+},{"./area":32,"./area_stack":33,"./bar":34,"./bar_group":35,"./bar_group_horizontal":36,"./bar_horizontal":37,"./bar_stack":38,"./bar_stack_horizontal":39,"./line":42,"./pie":43,"./scatter":44}],42:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2871,7 +2976,7 @@ LineChart.propTypes = {
 };
 exports.default = LineChart;
 module.exports = exports['default'];
-},{"./commonProps":38,"react":"react","react-d3-core":62,"react-d3-shape":83}],41:[function(require,module,exports){
+},{"./commonProps":40,"react":"react","react-d3-core":64,"react-d3-shape":85}],43:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2968,7 +3073,7 @@ PieChart.propTypes = {
 };
 exports.default = PieChart;
 module.exports = exports['default'];
-},{"react":"react","react-d3-core":62,"react-d3-shape":83}],42:[function(require,module,exports){
+},{"react":"react","react-d3-core":64,"react-d3-shape":85}],44:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3071,7 +3176,7 @@ ScatterPlot.propTypes = {
 };
 exports.default = ScatterPlot;
 module.exports = exports['default'];
-},{"./commonProps":38,"react":"react","react-d3-core":62,"react-d3-shape":83}],43:[function(require,module,exports){
+},{"./commonProps":40,"react":"react","react-d3-core":64,"react-d3-shape":85}],45:[function(require,module,exports){
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -3541,7 +3646,7 @@ module.exports = exports['default'];
   exports.zip = zip;
 
 }));
-},{}],44:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('d3-array'), require('d3-collection'), require('d3-interpolate'), require('d3-format'), require('d3-time'), require('d3-time-format'), require('d3-color')) :
   typeof define === 'function' && define.amd ? define(['exports', 'd3-array', 'd3-collection', 'd3-interpolate', 'd3-format', 'd3-time', 'd3-time-format', 'd3-color'], factory) :
@@ -4471,7 +4576,7 @@ module.exports = exports['default'];
   exports.scalePlasma = plasma;
 
 }));
-},{"d3-array":43,"d3-collection":45,"d3-color":46,"d3-format":47,"d3-interpolate":48,"d3-time":50,"d3-time-format":49}],45:[function(require,module,exports){
+},{"d3-array":45,"d3-collection":47,"d3-color":48,"d3-format":49,"d3-interpolate":50,"d3-time":52,"d3-time-format":51}],47:[function(require,module,exports){
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -4696,7 +4801,7 @@ module.exports = exports['default'];
   exports.entries = entries;
 
 }));
-},{}],46:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -5214,7 +5319,7 @@ module.exports = exports['default'];
   exports.cubehelix = cubehelix;
 
 }));
-},{}],47:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -5717,7 +5822,7 @@ module.exports = exports['default'];
   exports.precisionRound = precisionRound;
 
 }));
-},{}],48:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('d3-color')) :
   typeof define === 'function' && define.amd ? define(['exports', 'd3-color'], factory) :
@@ -6228,7 +6333,7 @@ module.exports = exports['default'];
   exports.interpolateCubehelixLong = cubehelixLong;
 
 }));
-},{"d3-color":46}],49:[function(require,module,exports){
+},{"d3-color":48}],51:[function(require,module,exports){
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('d3-time')) :
   typeof define === 'function' && define.amd ? define(['exports', 'd3-time'], factory) :
@@ -7062,7 +7167,7 @@ module.exports = exports['default'];
   exports.isoParse = parseIso;
 
 }));
-},{"d3-time":50}],50:[function(require,module,exports){
+},{"d3-time":52}],52:[function(require,module,exports){
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -7412,7 +7517,7 @@ module.exports = exports['default'];
   exports.timeInterval = newInterval;
 
 }));
-},{}],51:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7572,7 +7677,7 @@ Axis.PropTypes = {
   tickOrient: _react.PropTypes.oneOf(['top', 'bottom', 'left', 'right'])
 };
 exports.default = Axis;
-},{"../utils/scale":64,"d3-axis":67,"d3-selection":68,"react":"react","react-faux-dom":89}],52:[function(require,module,exports){
+},{"../utils/scale":66,"d3-axis":69,"d3-selection":70,"react":"react","react-faux-dom":91}],54:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7692,7 +7797,7 @@ Label.propTypes = {
   labelClassName: _react.PropTypes.string
 };
 exports.default = Label;
-},{"../commonProps":56,"d3-selection":68,"react":"react","react-faux-dom":89}],53:[function(require,module,exports){
+},{"../commonProps":58,"d3-selection":70,"react":"react","react-faux-dom":91}],55:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7858,7 +7963,7 @@ Xaxis.propTypes = {
   style: _react.PropTypes.object
 };
 exports.default = Xaxis;
-},{"../commonProps":56,"./axis":51,"./label":52,"react":"react"}],54:[function(require,module,exports){
+},{"../commonProps":58,"./axis":53,"./label":54,"react":"react"}],56:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8023,7 +8128,7 @@ Yaxis.propTypes = {
   style: _react.PropTypes.object
 };
 exports.default = Yaxis;
-},{"../commonProps":56,"./axis":51,"./label":52,"react":"react"}],55:[function(require,module,exports){
+},{"../commonProps":58,"./axis":53,"./label":54,"react":"react"}],57:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8101,7 +8206,7 @@ var ChartContainer = function (_Component) {
 
 ChartContainer.defaultProps = _commonProps2.default;
 exports.default = ChartContainer;
-},{"./commonProps":56,"./container/svg":57,"./legend":63,"react":"react"}],56:[function(require,module,exports){
+},{"./commonProps":58,"./container/svg":59,"./legend":65,"react":"react"}],58:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8112,7 +8217,7 @@ exports.default = {
   height: 500,
   margins: { top: 80, right: 100, bottom: 80, left: 100 }
 };
-},{}],57:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8200,7 +8305,7 @@ ChartSvg.propTypes = {
   svgClassName: _react.PropTypes.string.isRequired
 };
 exports.default = ChartSvg;
-},{"../commonProps":56,"../utils/scale":64,"react":"react"}],58:[function(require,module,exports){
+},{"../commonProps":58,"../utils/scale":66,"react":"react"}],60:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8276,7 +8381,7 @@ ChartTitle.propTypes = {
   titleClassName: _react.PropTypes.string
 };
 exports.default = ChartTitle;
-},{"../commonProps":56,"react":"react"}],59:[function(require,module,exports){
+},{"../commonProps":58,"react":"react"}],61:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8437,7 +8542,7 @@ Grid.propTypes = {
   yBandPaddingOuter: _react.PropTypes.number
 };
 exports.default = Grid;
-},{"../axis/axis":51,"../commonProps":56,"react":"react"}],60:[function(require,module,exports){
+},{"../axis/axis":53,"../commonProps":58,"react":"react"}],62:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8486,7 +8591,7 @@ var XGrid = function (_Component) {
 }(_react.Component);
 
 exports.default = XGrid;
-},{"./grid":59,"react":"react"}],61:[function(require,module,exports){
+},{"./grid":61,"react":"react"}],63:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8535,7 +8640,7 @@ var YGrid = function (_Component) {
 }(_react.Component);
 
 exports.default = YGrid;
-},{"./grid":59,"react":"react"}],62:[function(require,module,exports){
+},{"./grid":61,"react":"react"}],64:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8669,7 +8774,7 @@ Object.defineProperty(exports, 'yDomainCount', {
 });
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./axis/axis":51,"./axis/label":52,"./axis/xaxis":53,"./axis/yaxis":54,"./chartContainer":55,"./container/svg":57,"./container/title":58,"./grid/grid":59,"./grid/xgrid":60,"./grid/ygrid":61,"./legend":63,"./utils/scale":64,"./utils/xDomain":65,"./utils/yDomain":66}],63:[function(require,module,exports){
+},{"./axis/axis":53,"./axis/label":54,"./axis/xaxis":55,"./axis/yaxis":56,"./chartContainer":57,"./container/svg":59,"./container/title":60,"./grid/grid":61,"./grid/xgrid":62,"./grid/ygrid":63,"./legend":65,"./utils/scale":66,"./utils/xDomain":67,"./utils/yDomain":68}],65:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8815,7 +8920,7 @@ Legend.propTypes = {
   swatchShape: _react.PropTypes.oneOf(['circle', 'square'])
 };
 exports.default = Legend;
-},{"./commonProps":56,"d3-scale":44,"d3-selection":68,"react":"react","react-faux-dom":89}],64:[function(require,module,exports){
+},{"./commonProps":58,"d3-scale":46,"d3-selection":70,"react":"react","react-faux-dom":91}],66:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8867,7 +8972,7 @@ function _mkScaleSettings(props, func) {
 
   return func;
 }
-},{"d3-scale":44}],65:[function(require,module,exports){
+},{"d3-scale":46}],67:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8941,7 +9046,7 @@ function xDomain(props, stack, horizonal) {
     }
   }
 }
-},{"d3-array":43}],66:[function(require,module,exports){
+},{"d3-array":45}],68:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9021,7 +9126,7 @@ function yDomain(props, stack, horizonal) {
     }
   }
 }
-},{"d3-array":43}],67:[function(require,module,exports){
+},{"d3-array":45}],69:[function(require,module,exports){
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -9193,7 +9298,7 @@ function yDomain(props, stack, horizonal) {
   exports.axisLeft = axisLeft;
 
 }));
-},{}],68:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -10134,7 +10239,7 @@ function yDomain(props, stack, horizonal) {
   exports.window = defaultView;
 
 }));
-},{}],69:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10302,7 +10407,7 @@ ChartSvg.propTypes = {
   svgClassName: _react.PropTypes.string.isRequired
 };
 exports.default = ChartSvg;
-},{"./commonProps":71,"react":"react","react-d3-core":62}],70:[function(require,module,exports){
+},{"./commonProps":73,"react":"react","react-d3-core":64}],72:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10396,7 +10501,7 @@ ChartSvg.propTypes = {
   svgClassName: _react.PropTypes.string.isRequired
 };
 exports.default = ChartSvg;
-},{"./commonProps":71,"react":"react","react-d3-core":62}],71:[function(require,module,exports){
+},{"./commonProps":73,"react":"react","react-d3-core":64}],73:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10435,7 +10540,7 @@ var pieProps = exports.pieProps = {
   pieSort: function pieSort() {},
   pieTextShow: true
 };
-},{"d3-scale":44}],72:[function(require,module,exports){
+},{"d3-scale":46}],74:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10549,7 +10654,7 @@ Area.defaultProps = _extends({
   areaClassName: 'react-d3-basic__area'
 }, _commonProps2.default);
 exports.default = Area;
-},{"../commonProps":71,"../utils/series":84,"d3-shape":85,"react":"react"}],73:[function(require,module,exports){
+},{"../commonProps":73,"../utils/series":86,"d3-shape":87,"react":"react"}],75:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10683,7 +10788,7 @@ AreaStack.defaultProps = _extends({
   areaClassName: 'react-d3-basic__area_stack'
 }, _commonProps2.default);
 exports.default = AreaStack;
-},{"../commonProps":71,"../utils/series":84,"d3-shape":85,"react":"react"}],74:[function(require,module,exports){
+},{"../commonProps":73,"../utils/series":86,"d3-shape":87,"react":"react"}],76:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10792,7 +10897,7 @@ Bar.defaultProps = {
   barClassName: 'react-d3-basic__bar'
 };
 exports.default = Bar;
-},{"../utils/series":84,"react":"react"}],75:[function(require,module,exports){
+},{"../utils/series":86,"react":"react"}],77:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10913,7 +11018,7 @@ BarGroup.defaultProps = {
   barClassName: 'react-d3-basic__bar_group'
 };
 exports.default = BarGroup;
-},{"../utils/series":84,"d3-scale":44,"react":"react"}],76:[function(require,module,exports){
+},{"../utils/series":86,"d3-scale":46,"react":"react"}],78:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11040,7 +11145,7 @@ BarGroupHorizontal.defaultProps = {
   barClassName: 'react-d3-basic__bar_group_horizontal'
 };
 exports.default = BarGroupHorizontal;
-},{"../utils/series":84,"d3-scale":44,"react":"react"}],77:[function(require,module,exports){
+},{"../utils/series":86,"d3-scale":46,"react":"react"}],79:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11148,7 +11253,7 @@ BarHorizontal.defaultProps = {
   barClassName: 'react-d3-basic__bar_horizontal'
 };
 exports.default = BarHorizontal;
-},{"../utils/series":84,"react":"react"}],78:[function(require,module,exports){
+},{"../utils/series":86,"react":"react"}],80:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11307,7 +11412,7 @@ BarStack.defaultProps = {
   barClassName: 'react-d3-basic__bar_stack'
 };
 exports.default = BarStack;
-},{"../utils/series":84,"d3":87,"react":"react"}],79:[function(require,module,exports){
+},{"../utils/series":86,"d3":89,"react":"react"}],81:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11465,7 +11570,7 @@ BarStackHorizontal.defaultProps = {
   barClassName: 'react-d3-basic__bar_stack_horizontal'
 };
 exports.default = BarStackHorizontal;
-},{"../utils/series":84,"d3":87,"react":"react"}],80:[function(require,module,exports){
+},{"../utils/series":86,"d3":89,"react":"react"}],82:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11567,7 +11672,7 @@ Line.defaultProps = _extends({
   lineClassName: 'react-d3-basic__line'
 }, _commonProps2.default);
 exports.default = Line;
-},{"../commonProps":71,"../utils/series":84,"d3-shape":85,"react":"react"}],81:[function(require,module,exports){
+},{"../commonProps":73,"../utils/series":86,"d3-shape":87,"react":"react"}],83:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11747,7 +11852,7 @@ Pie.defaultProps = _extends({
   onMouseOut: function onMouseOut(d) {}
 }, _commonProps.pieProps);
 exports.default = Pie;
-},{"../commonProps":71,"d3-shape":85,"react":"react"}],82:[function(require,module,exports){
+},{"../commonProps":73,"d3-shape":87,"react":"react"}],84:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11865,7 +11970,7 @@ Scatter.defaultProps = {
   scatterClassName: 'react-d3-basic__scatter'
 };
 exports.default = Scatter;
-},{"../utils/series":84,"d3-shape":85,"react":"react"}],83:[function(require,module,exports){
+},{"../utils/series":86,"d3-shape":87,"react":"react"}],85:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -11999,7 +12104,7 @@ Object.defineProperty(exports, 'Scatter', {
 });
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./chart":69,"./chartpie":70,"./components/area":72,"./components/area_stack":73,"./components/bar":74,"./components/bar_group":75,"./components/bar_group_horizontal":76,"./components/bar_horizontal":77,"./components/bar_stack":78,"./components/bar_stack_horizontal":79,"./components/line":80,"./components/pie":81,"./components/scatter":82,"./utils/series":84}],84:[function(require,module,exports){
+},{"./chart":71,"./chartpie":72,"./components/area":74,"./components/area_stack":75,"./components/bar":76,"./components/bar_group":77,"./components/bar_group_horizontal":78,"./components/bar_horizontal":79,"./components/bar_stack":80,"./components/bar_stack_horizontal":81,"./components/line":82,"./components/pie":83,"./components/scatter":84,"./utils/series":86}],86:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12061,7 +12166,7 @@ function series(props, horizontal) {
 
   return chartSeriesData;
 }
-},{"d3":87}],85:[function(require,module,exports){
+},{"d3":89}],87:[function(require,module,exports){
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('d3-path')) :
   typeof define === 'function' && define.amd ? define(['exports', 'd3-path'], factory) :
@@ -13809,7 +13914,7 @@ function series(props, horizontal) {
   exports.stackOrderReverse = reverse;
 
 }));
-},{"d3-path":86}],86:[function(require,module,exports){
+},{"d3-path":88}],88:[function(require,module,exports){
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -13965,7 +14070,7 @@ function series(props, horizontal) {
   exports.path = path;
 
 }));
-},{}],87:[function(require,module,exports){
+},{}],89:[function(require,module,exports){
 !function() {
   var d3 = {
     version: "3.5.16"
@@ -23520,7 +23625,7 @@ function series(props, horizontal) {
   });
   if (typeof define === "function" && define.amd) this.d3 = d3, define(d3); else if (typeof module === "object" && module.exports) module.exports = d3; else this.d3 = d3;
 }();
-},{}],88:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 var React = require('react')
 var styleAttr = require('style-attr')
 var querySelectorAll = require('query-selector')
@@ -23867,7 +23972,7 @@ namespaceMethods.forEach(function (name) {
 
 module.exports = Element
 
-},{"./utils/assign":91,"./utils/camelCase":92,"./utils/isString":93,"./utils/isUndefined":94,"./utils/mapValues":95,"./utils/styleCamelCase":96,"query-selector":97,"react":"react","style-attr":101}],89:[function(require,module,exports){
+},{"./utils/assign":93,"./utils/camelCase":94,"./utils/isString":95,"./utils/isUndefined":96,"./utils/mapValues":97,"./utils/styleCamelCase":98,"query-selector":99,"react":"react","style-attr":103}],91:[function(require,module,exports){
 var Element = require('./Element')
 var Window = require('./Window')
 
@@ -23891,7 +23996,7 @@ Element.prototype.ownerDocument = ReactFauxDOM
 
 module.exports = ReactFauxDOM
 
-},{"./Element":88,"./Window":90}],90:[function(require,module,exports){
+},{"./Element":90,"./Window":92}],92:[function(require,module,exports){
 var Window = {
   getComputedStyle: function (node) {
     return {
@@ -23902,7 +24007,7 @@ var Window = {
 
 module.exports = Window
 
-},{}],91:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 function assign (dest) {
   var args = arguments
   var source
@@ -23920,7 +24025,7 @@ function assign (dest) {
 
 module.exports = assign
 
-},{}],92:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 var hyphenExpression = /\-+([a-z])/gi
 
 function upperCaseFirstMatch (match, c, offset) {
@@ -23939,21 +24044,21 @@ function camelCase (str) {
 
 module.exports = camelCase
 
-},{}],93:[function(require,module,exports){
+},{}],95:[function(require,module,exports){
 function isString (value) {
   return typeof value === 'string'
 }
 
 module.exports = isString
 
-},{}],94:[function(require,module,exports){
+},{}],96:[function(require,module,exports){
 function isUndefined (value) {
   return typeof value === 'undefined'
 }
 
 module.exports = isUndefined
 
-},{}],95:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 function mapValues (source, fn) {
   var destination = {}
 
@@ -23968,7 +24073,7 @@ function mapValues (source, fn) {
 
 module.exports = mapValues
 
-},{}],96:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 var camelCase = require('./camelCase')
 
 function styleCamelCase (name) {
@@ -23990,9 +24095,9 @@ function styleCamelCase (name) {
 
 module.exports = styleCamelCase
 
-},{"./camelCase":92}],97:[function(require,module,exports){
+},{"./camelCase":94}],99:[function(require,module,exports){
 module.exports = require('./lib/query-selector');
-},{"./lib/query-selector":98}],98:[function(require,module,exports){
+},{"./lib/query-selector":100}],100:[function(require,module,exports){
 /**
  * @ignore
  * css3 selector engine for ie6-8
@@ -24691,7 +24796,7 @@ select.version = '@VERSION@';
  *  - http://blogs.msdn.com/ie/archive/2010/05/13/the-css-corner-css3-selectors.aspx
  *  - http://sizzlejs.com/
  */
-},{"./query-selector/parser":99,"./query-selector/util":100}],99:[function(require,module,exports){
+},{"./query-selector/parser":101,"./query-selector/util":102}],101:[function(require,module,exports){
 /*
   Generated by kison.*/
 var parser = (function (undefined) {
@@ -25896,7 +26001,7 @@ var parser = (function (undefined) {
 if (typeof module !== 'undefined') {
     module.exports = parser;
 }
-},{}],100:[function(require,module,exports){
+},{}],102:[function(require,module,exports){
 /**
  * attr fix for old ie
  * @author yiminghe@gmail.com
@@ -26243,7 +26348,7 @@ var util = module.exports = {
     }
   }
 };
-},{}],101:[function(require,module,exports){
+},{}],103:[function(require,module,exports){
 
 
 /*
@@ -26344,67 +26449,63 @@ function normalize(str) {
 module.exports.parse = parse;
 module.exports.stringify = stringify;
 module.exports.normalize = normalize;
-},{}],102:[function(require,module,exports){
-arguments[4][51][0].apply(exports,arguments)
-},{"../utils/scale":115,"d3-axis":119,"d3-selection":127,"dup":51,"react":"react","react-faux-dom":129}],103:[function(require,module,exports){
-arguments[4][52][0].apply(exports,arguments)
-},{"../commonProps":107,"d3-selection":127,"dup":52,"react":"react","react-faux-dom":129}],104:[function(require,module,exports){
+},{}],104:[function(require,module,exports){
 arguments[4][53][0].apply(exports,arguments)
-},{"../commonProps":107,"./axis":102,"./label":103,"dup":53,"react":"react"}],105:[function(require,module,exports){
+},{"../utils/scale":117,"d3-axis":121,"d3-selection":129,"dup":53,"react":"react","react-faux-dom":131}],105:[function(require,module,exports){
 arguments[4][54][0].apply(exports,arguments)
-},{"../commonProps":107,"./axis":102,"./label":103,"dup":54,"react":"react"}],106:[function(require,module,exports){
+},{"../commonProps":109,"d3-selection":129,"dup":54,"react":"react","react-faux-dom":131}],106:[function(require,module,exports){
 arguments[4][55][0].apply(exports,arguments)
-},{"./commonProps":107,"./container/svg":108,"./legend":114,"dup":55,"react":"react"}],107:[function(require,module,exports){
+},{"../commonProps":109,"./axis":104,"./label":105,"dup":55,"react":"react"}],107:[function(require,module,exports){
 arguments[4][56][0].apply(exports,arguments)
-},{"dup":56}],108:[function(require,module,exports){
+},{"../commonProps":109,"./axis":104,"./label":105,"dup":56,"react":"react"}],108:[function(require,module,exports){
 arguments[4][57][0].apply(exports,arguments)
-},{"../commonProps":107,"../utils/scale":115,"dup":57,"react":"react"}],109:[function(require,module,exports){
+},{"./commonProps":109,"./container/svg":110,"./legend":116,"dup":57,"react":"react"}],109:[function(require,module,exports){
 arguments[4][58][0].apply(exports,arguments)
-},{"../commonProps":107,"dup":58,"react":"react"}],110:[function(require,module,exports){
+},{"dup":58}],110:[function(require,module,exports){
 arguments[4][59][0].apply(exports,arguments)
-},{"../axis/axis":102,"../commonProps":107,"dup":59,"react":"react"}],111:[function(require,module,exports){
+},{"../commonProps":109,"../utils/scale":117,"dup":59,"react":"react"}],111:[function(require,module,exports){
 arguments[4][60][0].apply(exports,arguments)
-},{"./grid":110,"dup":60,"react":"react"}],112:[function(require,module,exports){
+},{"../commonProps":109,"dup":60,"react":"react"}],112:[function(require,module,exports){
 arguments[4][61][0].apply(exports,arguments)
-},{"./grid":110,"dup":61,"react":"react"}],113:[function(require,module,exports){
+},{"../axis/axis":104,"../commonProps":109,"dup":61,"react":"react"}],113:[function(require,module,exports){
 arguments[4][62][0].apply(exports,arguments)
-},{"./axis/axis":102,"./axis/label":103,"./axis/xaxis":104,"./axis/yaxis":105,"./chartContainer":106,"./container/svg":108,"./container/title":109,"./grid/grid":110,"./grid/xgrid":111,"./grid/ygrid":112,"./legend":114,"./utils/scale":115,"./utils/xDomain":116,"./utils/yDomain":117,"dup":62}],114:[function(require,module,exports){
+},{"./grid":112,"dup":62,"react":"react"}],114:[function(require,module,exports){
 arguments[4][63][0].apply(exports,arguments)
-},{"./commonProps":107,"d3-scale":120,"d3-selection":127,"dup":63,"react":"react","react-faux-dom":129}],115:[function(require,module,exports){
+},{"./grid":112,"dup":63,"react":"react"}],115:[function(require,module,exports){
 arguments[4][64][0].apply(exports,arguments)
-},{"d3-scale":120,"dup":64}],116:[function(require,module,exports){
+},{"./axis/axis":104,"./axis/label":105,"./axis/xaxis":106,"./axis/yaxis":107,"./chartContainer":108,"./container/svg":110,"./container/title":111,"./grid/grid":112,"./grid/xgrid":113,"./grid/ygrid":114,"./legend":116,"./utils/scale":117,"./utils/xDomain":118,"./utils/yDomain":119,"dup":64}],116:[function(require,module,exports){
 arguments[4][65][0].apply(exports,arguments)
-},{"d3-array":118,"dup":65}],117:[function(require,module,exports){
+},{"./commonProps":109,"d3-scale":122,"d3-selection":129,"dup":65,"react":"react","react-faux-dom":131}],117:[function(require,module,exports){
 arguments[4][66][0].apply(exports,arguments)
-},{"d3-array":118,"dup":66}],118:[function(require,module,exports){
-arguments[4][43][0].apply(exports,arguments)
-},{"dup":43}],119:[function(require,module,exports){
+},{"d3-scale":122,"dup":66}],118:[function(require,module,exports){
 arguments[4][67][0].apply(exports,arguments)
-},{"dup":67}],120:[function(require,module,exports){
-arguments[4][44][0].apply(exports,arguments)
-},{"d3-array":118,"d3-collection":121,"d3-color":122,"d3-format":123,"d3-interpolate":124,"d3-time":126,"d3-time-format":125,"dup":44}],121:[function(require,module,exports){
+},{"d3-array":120,"dup":67}],119:[function(require,module,exports){
+arguments[4][68][0].apply(exports,arguments)
+},{"d3-array":120,"dup":68}],120:[function(require,module,exports){
 arguments[4][45][0].apply(exports,arguments)
-},{"dup":45}],122:[function(require,module,exports){
+},{"dup":45}],121:[function(require,module,exports){
+arguments[4][69][0].apply(exports,arguments)
+},{"dup":69}],122:[function(require,module,exports){
 arguments[4][46][0].apply(exports,arguments)
-},{"dup":46}],123:[function(require,module,exports){
+},{"d3-array":120,"d3-collection":123,"d3-color":124,"d3-format":125,"d3-interpolate":126,"d3-time":128,"d3-time-format":127,"dup":46}],123:[function(require,module,exports){
 arguments[4][47][0].apply(exports,arguments)
 },{"dup":47}],124:[function(require,module,exports){
 arguments[4][48][0].apply(exports,arguments)
-},{"d3-color":122,"dup":48}],125:[function(require,module,exports){
+},{"dup":48}],125:[function(require,module,exports){
 arguments[4][49][0].apply(exports,arguments)
-},{"d3-time":126,"dup":49}],126:[function(require,module,exports){
+},{"dup":49}],126:[function(require,module,exports){
 arguments[4][50][0].apply(exports,arguments)
-},{"dup":50}],127:[function(require,module,exports){
-arguments[4][68][0].apply(exports,arguments)
-},{"dup":68}],128:[function(require,module,exports){
-arguments[4][88][0].apply(exports,arguments)
-},{"./utils/assign":131,"./utils/camelCase":132,"./utils/isString":133,"./utils/isUndefined":134,"./utils/mapValues":135,"./utils/styleCamelCase":136,"dup":88,"query-selector":137,"react":"react","style-attr":141}],129:[function(require,module,exports){
-arguments[4][89][0].apply(exports,arguments)
-},{"./Element":128,"./Window":130,"dup":89}],130:[function(require,module,exports){
+},{"d3-color":124,"dup":50}],127:[function(require,module,exports){
+arguments[4][51][0].apply(exports,arguments)
+},{"d3-time":128,"dup":51}],128:[function(require,module,exports){
+arguments[4][52][0].apply(exports,arguments)
+},{"dup":52}],129:[function(require,module,exports){
+arguments[4][70][0].apply(exports,arguments)
+},{"dup":70}],130:[function(require,module,exports){
 arguments[4][90][0].apply(exports,arguments)
-},{"dup":90}],131:[function(require,module,exports){
+},{"./utils/assign":133,"./utils/camelCase":134,"./utils/isString":135,"./utils/isUndefined":136,"./utils/mapValues":137,"./utils/styleCamelCase":138,"dup":90,"query-selector":139,"react":"react","style-attr":143}],131:[function(require,module,exports){
 arguments[4][91][0].apply(exports,arguments)
-},{"dup":91}],132:[function(require,module,exports){
+},{"./Element":130,"./Window":132,"dup":91}],132:[function(require,module,exports){
 arguments[4][92][0].apply(exports,arguments)
 },{"dup":92}],133:[function(require,module,exports){
 arguments[4][93][0].apply(exports,arguments)
@@ -26414,14 +26515,18 @@ arguments[4][94][0].apply(exports,arguments)
 arguments[4][95][0].apply(exports,arguments)
 },{"dup":95}],136:[function(require,module,exports){
 arguments[4][96][0].apply(exports,arguments)
-},{"./camelCase":132,"dup":96}],137:[function(require,module,exports){
+},{"dup":96}],137:[function(require,module,exports){
 arguments[4][97][0].apply(exports,arguments)
-},{"./lib/query-selector":138,"dup":97}],138:[function(require,module,exports){
+},{"dup":97}],138:[function(require,module,exports){
 arguments[4][98][0].apply(exports,arguments)
-},{"./query-selector/parser":139,"./query-selector/util":140,"dup":98}],139:[function(require,module,exports){
+},{"./camelCase":134,"dup":98}],139:[function(require,module,exports){
 arguments[4][99][0].apply(exports,arguments)
-},{"dup":99}],140:[function(require,module,exports){
+},{"./lib/query-selector":140,"dup":99}],140:[function(require,module,exports){
 arguments[4][100][0].apply(exports,arguments)
-},{"dup":100}],141:[function(require,module,exports){
+},{"./query-selector/parser":141,"./query-selector/util":142,"dup":100}],141:[function(require,module,exports){
 arguments[4][101][0].apply(exports,arguments)
-},{"dup":101}]},{},[8]);
+},{"dup":101}],142:[function(require,module,exports){
+arguments[4][102][0].apply(exports,arguments)
+},{"dup":102}],143:[function(require,module,exports){
+arguments[4][103][0].apply(exports,arguments)
+},{"dup":103}]},{},[9]);

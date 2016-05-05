@@ -1,6 +1,6 @@
 import React from 'react';
-import Footer from './Footer';
-import Header from './Header';
+import Footer from './footer';
+import Header from './header';
 
 class App extends React.Component {
   constructor(props) {

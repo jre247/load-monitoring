@@ -1,7 +1,7 @@
 import React from 'react';
 import {Route} from 'react-router';
 import App from './components/app';
-import Load from './components/Load';
+import Load from './components/load';
 
 export default (
   <Route component={App}>
