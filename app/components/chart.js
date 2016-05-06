@@ -25,9 +25,15 @@ class Chart extends React.Component {
     var self = this;
     var data = this.props.data;
     
-    var width = 700,
-      height = 300,
-      margins = {left: 100, right: 100, top: 50, bottom: 50},
+    var width = this.props.width || 700,
+      height = this.props.height || 300,
+      margins = {
+        left: this.props.marginLeft || 100, 
+        right: this.props.marginRight || 100, 
+        top: this.props.marginTop || 50, 
+        bottom: this.props.marginBottom || 50
+      },
+      xScale = this.props.xScale || "time",
       title = self.props.title,
       // chart series,
       // field: is what field your data want to be selected
@@ -42,7 +48,11 @@ class Chart extends React.Component {
       ],
       // your x accessor
       x = function(d) {
-        return d[self.props.x];
+        var date = new Date(d[self.props.x]);
+        //var dateAsSec = date.getTicks();
+        
+       // var parseDate = d3.time.format("%YM%m").parse;
+        return date;
       }
       
     ReactDOM.render(
@@ -60,7 +70,7 @@ class Chart extends React.Component {
           height={height}
           chartSeries={chartSeries}
           x={x}
-          xScale={"time"}
+          xScale={xScale}
         />
       </D3Chart>
     , document.getElementById('line-chart')

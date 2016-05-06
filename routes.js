@@ -8,7 +8,7 @@ module.exports = function(app) {
       
       var load = {
         uptime: Math.floor(Math.random() * 6) + 1 ,
-        time: moment().format("dddd, MMMM Do YYYY, h:mm:ss")
+        time: moment().format("MM/DD/YYYY h:mm:ss")
       };
    
       res.status(200).send(load);
