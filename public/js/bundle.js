@@ -421,6 +421,7 @@ var Load = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Load).call(this, props));
 
+    _this.interval = 10000;
     _this.state = _loadStore2.default.getState();
     _this.onChange = _this.onChange.bind(_this);
     return _this;
@@ -430,15 +431,18 @@ var Load = function (_React$Component) {
     key: 'onChange',
     value: function onChange(state) {
       this.setState(state);
+      this.isPageLoading = false;
     }
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
       _loadStore2.default.listen(this.onChange);
 
+      _loadActions2.default.getLoad();
+
       setInterval(function () {
         _loadActions2.default.getLoad();
-      }, 2000);
+      }, this.interval);
     }
   }, {
     key: 'componentWillUnmount',
@@ -448,7 +452,7 @@ var Load = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      if (this.state.loadHistory.length == 0) {
+      if (this.state.loadHistory.length === 0) {
         return _react2.default.createElement(
           'div',
           { className: 'spinner' },

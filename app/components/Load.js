@@ -6,21 +6,24 @@ import Chart from './chart';
 class Load extends React.Component {
   constructor(props) {
     super(props);
-    
+    this.interval = 10000;
     this.state = LoadStore.getState();
     this.onChange = this.onChange.bind(this);
   }
 
   onChange(state) {
     this.setState(state);
+    this.isPageLoading = false;
   }
   
   componentDidMount() {
      LoadStore.listen(this.onChange);
      
+     LoadActions.getLoad();
+     
      setInterval(function(){
        LoadActions.getLoad();
-     }, 2000);  
+     }, this.interval);  
   }
 
   componentWillUnmount() {
@@ -28,7 +31,7 @@ class Load extends React.Component {
   }
 
   render() {
-    if(this.state.loadHistory.length == 0){
+    if(this.state.loadHistory.length === 0){
       return (
         <div className="spinner">
           <img src="/css/images/ajax-loader.gif"  />
