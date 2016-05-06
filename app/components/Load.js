@@ -13,7 +13,6 @@ class Load extends React.Component {
 
   onChange(state) {
     this.setState(state);
-    this.isPageLoading = false;
   }
   
   componentDidMount() {

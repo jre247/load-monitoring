@@ -431,7 +431,6 @@ var Load = function (_React$Component) {
     key: 'onChange',
     value: function onChange(state) {
       this.setState(state);
-      this.isPageLoading = false;
     }
   }, {
     key: 'componentDidMount',
