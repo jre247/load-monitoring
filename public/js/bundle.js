@@ -340,27 +340,14 @@ var Header = function (_React$Component) {
     _classCallCheck(this, Header);
 
     return _possibleConstructorReturn(this, Object.getPrototypeOf(Header).call(this, props));
-    //this.state = NavbarStore.getState();
-    //this.onChange = this.onChange.bind(this);
   }
 
   _createClass(Header, [{
     key: 'componentDidMount',
-    value: function componentDidMount() {
-      //  NavbarStore.listen(this.onChange);
-      //  NavbarActions.getCharacterCount();
-
-    }
+    value: function componentDidMount() {}
   }, {
     key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      //NavbarStore.unlisten(this.onChange);
-    }
-  }, {
-    key: 'onChange',
-    value: function onChange(state) {
-      //  this.setState(state);
-    }
+    value: function componentWillUnmount() {}
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(event) {}
@@ -369,23 +356,19 @@ var Header = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'Header' },
+        { className: 'header-container' },
         _react2.default.createElement(
           'div',
-          { className: 'Header-container' },
+          null,
+          _react2.default.createElement(_navigation2.default, { className: 'header-nav', history: this.props.history })
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'header-brand' },
           _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(_navigation2.default, { className: 'Header-nav', history: this.props.history })
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'Header-brand' },
-            _react2.default.createElement(
-              'span',
-              { className: 'Header-brandTxt' },
-              'Load Monitor'
-            )
+            'span',
+            { className: 'header-brandTxt' },
+            'Load Monitor'
           )
         )
       );
@@ -465,46 +448,52 @@ var Load = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      if (this.state.loadHistory.length == 0) return null;
-
-      var loadHistory = this.state.loadHistory.map(function (load, index) {
+      if (this.state.loadHistory.length == 0) {
         return _react2.default.createElement(
           'div',
-          { key: index, className: 'row' },
-          _react2.default.createElement(
-            'div',
-            { className: 'col-md-6' },
-            load.time
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'col-md-6' },
-            load.uptime
-          )
+          { className: 'spinner' },
+          _react2.default.createElement('img', { src: '/css/images/ajax-loader.gif' })
         );
-      });
+      }
 
-      var propsData = { data: this.state.loadHistory, x: "time", y: "uptime", title: "Load" };
+      var propsData = {
+        data: this.state.loadHistory,
+        x: "time",
+        y: "uptime",
+        title: "Load",
+        width: 1000
+      };
+
+      var loadHistoryCount = this.state.loadHistory.length;
+      var latestLoad = this.state.loadHistory[loadHistoryCount - 1];
 
       return _react2.default.createElement(
         'div',
-        { className: 'Load-content' },
+        { className: 'load-content' },
         _react2.default.createElement(
-          'h3',
-          null,
-          'Load Monitor'
+          'div',
+          { className: 'form-group latest-load' },
+          _react2.default.createElement(
+            'label',
+            { className: 'col-sm-2 control-label' },
+            'Latest Load: '
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-sm-10' },
+            _react2.default.createElement(
+              'p',
+              null,
+              latestLoad.uptime
+            )
+          )
         ),
         _react2.default.createElement(
           'div',
           { className: 'row' },
           _react2.default.createElement(
             'div',
-            { className: 'col-md-6' },
-            loadHistory
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'col-md-6' },
+            { className: 'col-md-12' },
             _react2.default.createElement(
               _chart2.default,
               propsData,
@@ -570,15 +559,7 @@ var Navbar = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(
-          'div',
-          { className: 'Navigation', role: 'navigation' },
-          _react2.default.createElement(
-            _reactRouter.Link,
-            { className: 'Navigation-link', to: '/' },
-            'Load'
-          )
-        )
+        ' '
       );
     }
   }]);

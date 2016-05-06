@@ -28,29 +28,36 @@ class Load extends React.Component {
   }
 
   render() {
-    if(this.state.loadHistory.length == 0)
-      return null;
-      
-    let loadHistory = this.state.loadHistory.map((load, index) => {
+    if(this.state.loadHistory.length == 0){
       return (
-        <div key={index} className="row">
-          <div className="col-md-6">{load.time}</div>
-          <div className="col-md-6">{load.uptime}</div>
+        <div className="spinner">
+          <img src="/css/images/ajax-loader.gif"  />
         </div>
       );
-    });
+    }
+      
+    var propsData = {
+      data: this.state.loadHistory, 
+      x: "time", 
+      y: "uptime", 
+      title: "Load",
+      width: 1000
+    };
     
-    var propsData = {data: this.state.loadHistory, x: "time", y: "uptime", title: "Load"};
+    var loadHistoryCount = this.state.loadHistory.length;
+    var latestLoad = this.state.loadHistory[loadHistoryCount - 1];
     
     return (
-      <div className="Load-content">
-          <h3>Load Monitor</h3>
-          
-          <div className="row">      
-            <div className="col-md-6">
-              {loadHistory}
+      <div className="load-content">
+          <div className="form-group latest-load">
+            <label className="col-sm-2 control-label">Latest Load: </label>
+            <div className="col-sm-10">
+              <p>{latestLoad.uptime}</p>
             </div>
-            <div className="col-md-6">
+          </div>
+          
+          <div className="row">                
+            <div className="col-md-12">
               <Chart {...propsData}> </Chart>
             </div>
           </div>

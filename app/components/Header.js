@@ -5,23 +5,13 @@ import Navigation from './navigation';
 class Header extends React.Component {
   constructor(props) {
     super(props);
-    //this.state = NavbarStore.getState();
-    //this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
-  //  NavbarStore.listen(this.onChange);
-  //  NavbarActions.getCharacterCount();
-
 
   }
 
   componentWillUnmount() {
-    //NavbarStore.unlisten(this.onChange);
-  }
-
-  onChange(state) {
-  //  this.setState(state);
   }
 
   handleSubmit(event) {
@@ -30,16 +20,14 @@ class Header extends React.Component {
 
   render() {
     return (
-      <div className="Header">
-        <div className="Header-container">
-          <div>
-            <Navigation className="Header-nav" history={this.props.history} />
-          </div>
-          <div className="Header-brand" >
-            <span className="Header-brandTxt">Load Monitor</span>
-          </div>
-
+      <div className="header-container">
+        <div>
+          <Navigation className="header-nav" history={this.props.history} />
         </div>
+        <div className="header-brand" >
+          <span className="header-brandTxt">Load Monitor</span>
+        </div>
+
       </div>
     );
   }

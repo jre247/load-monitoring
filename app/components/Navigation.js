@@ -23,11 +23,7 @@ class Navbar extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className='Navigation' role="navigation">
-            <Link className="Navigation-link" to="/">Load</Link>
-        </div>
-      </div>
+      <div> </div>
     );
 
   }

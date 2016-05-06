@@ -1,0 +1,30 @@
+
+.load-content{
+    padding: 10px;
+    margin-top: 30px;
+
+    // There seems to possibly be a bug with the current d3/react library I am using that will double the height: 
+    // that I set for the created chart.
+    // TODO: Figure workaround or use another library
+    svg:first-child {
+        height: 0px; 
+    }
+    
+    .latest-load{
+        margin-left: 70px;    
+        height: 50px;
+        padding: 5px;
+        border: 1px solid lightgray;
+        border-radius: 5px;
+        width: 831px;  
+    }
+
+    .spinner{
+        margin-left: 40%;
+    }
+   
+}
+
+ .app-container{
+    width: 1100px;
+}
