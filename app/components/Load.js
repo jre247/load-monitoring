@@ -14,7 +14,18 @@ class Load extends React.Component {
   onChange(state) {
     //High load generated an alert - load = {value}, triggered at {time}
     
-    this.setState(state.data);
+    var load = state.load;
+    
+    if(!this.state.history){
+      this.state.history = [];
+    }   
+    this.state.history.push(load);
+    
+    this.setState({
+      load: load,
+      isInitialized: true,
+      history: this.state.history
+    });
   }
   
   componentDidMount() {
@@ -48,15 +59,13 @@ class Load extends React.Component {
       width: 1000
     };
     
-    var historyCount = this.state.history.length;
-    var latestLoad = this.state.history[historyCount - 1];
     
     return (
       <div className="load-content container-fluid">
-          <div className="form-group latest-load col-md-6">
-            <label className="col-sm-2 control-label">Latest Load: </label>
+          <div className="form-group latest-load">
+            <label className="col-sm-2 control-label">Uptime: </label>
             <div className="col-sm-4">
-              <p>{latestLoad.uptime}</p>
+              <p>{this.state.load.uptime}</p>
             </div>
           </div>
           

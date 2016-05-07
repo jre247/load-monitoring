@@ -432,7 +432,18 @@ var Load = function (_React$Component) {
     value: function onChange(state) {
       //High load generated an alert - load = {value}, triggered at {time}
 
-      this.setState(state.data);
+      var load = state.load;
+
+      if (!this.state.history) {
+        this.state.history = [];
+      }
+      this.state.history.push(load);
+
+      this.setState({
+        load: load,
+        isInitialized: true,
+        history: this.state.history
+      });
     }
   }, {
     key: 'componentDidMount',
@@ -469,19 +480,16 @@ var Load = function (_React$Component) {
         width: 1000
       };
 
-      var historyCount = this.state.history.length;
-      var latestLoad = this.state.history[historyCount - 1];
-
       return _react2.default.createElement(
         'div',
         { className: 'load-content container-fluid' },
         _react2.default.createElement(
           'div',
-          { className: 'form-group latest-load col-md-6' },
+          { className: 'form-group latest-load' },
           _react2.default.createElement(
             'label',
             { className: 'col-sm-2 control-label' },
-            'Latest Load: '
+            'Uptime: '
           ),
           _react2.default.createElement(
             'div',
@@ -489,7 +497,7 @@ var Load = function (_React$Component) {
             _react2.default.createElement(
               'p',
               null,
-              latestLoad.uptime
+              this.state.load.uptime
             )
           )
         ),
@@ -662,17 +670,13 @@ var LoadStore = function () {
     _classCallCheck(this, LoadStore);
 
     this.bindActions(_loadActions2.default);
-    this.data = {
-      history: [],
-      isInitialized: false
-    };
+    this.load = {};
   }
 
   _createClass(LoadStore, [{
     key: 'getLoadSuccess',
     value: function getLoadSuccess(load) {
-      this.data.history.push(load);
-      this.data.isInitialized = true;
+      this.load = load;
     }
   }, {
     key: 'getLoadFail',
