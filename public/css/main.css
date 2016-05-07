@@ -7259,6 +7259,10 @@ img.mfp-img {
     padding-right: 6px;
   }
 }
+#app {
+  width: 1150px;
+  margin: 0 auto;
+}
 a {
   color: black;
   text-decoration: none;
@@ -7282,22 +7286,19 @@ a:hover {
 .load-content {
   padding: 10px;
   margin-top: 30px;
+  width: 900px;
 }
 .load-content svg:first-child {
   height: 0px;
 }
 .load-content .latest-load {
-  margin-left: 70px;
   height: 50px;
   padding: 5px;
   border: 1px solid lightgray;
   border-radius: 5px;
-  width: 831px;
+  margin-left: 6%;
 }
 .spinner {
   text-align: center;
   margin-top: 30px;
-}
-.app-container {
-  width: 1100px;
 }

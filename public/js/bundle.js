@@ -430,7 +430,9 @@ var Load = function (_React$Component) {
   _createClass(Load, [{
     key: 'onChange',
     value: function onChange(state) {
-      this.setState(state);
+      //High load generated an alert - load = {value}, triggered at {time}
+
+      this.setState(state.data);
     }
   }, {
     key: 'componentDidMount',
@@ -451,7 +453,7 @@ var Load = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      if (this.state.loadHistory.length === 0) {
+      if (!this.state.isInitialized) {
         return _react2.default.createElement(
           'div',
           { className: 'spinner' },
@@ -460,22 +462,22 @@ var Load = function (_React$Component) {
       }
 
       var propsData = {
-        data: this.state.loadHistory,
+        data: this.state.history,
         x: "time",
         y: "uptime",
         title: "Load",
         width: 1000
       };
 
-      var loadHistoryCount = this.state.loadHistory.length;
-      var latestLoad = this.state.loadHistory[loadHistoryCount - 1];
+      var historyCount = this.state.history.length;
+      var latestLoad = this.state.history[historyCount - 1];
 
       return _react2.default.createElement(
         'div',
-        { className: 'load-content' },
+        { className: 'load-content container-fluid' },
         _react2.default.createElement(
           'div',
-          { className: 'form-group latest-load' },
+          { className: 'form-group latest-load col-md-6' },
           _react2.default.createElement(
             'label',
             { className: 'col-sm-2 control-label' },
@@ -483,7 +485,7 @@ var Load = function (_React$Component) {
           ),
           _react2.default.createElement(
             'div',
-            { className: 'col-sm-10' },
+            { className: 'col-sm-4' },
             _react2.default.createElement(
               'p',
               null,
@@ -660,13 +662,17 @@ var LoadStore = function () {
     _classCallCheck(this, LoadStore);
 
     this.bindActions(_loadActions2.default);
-    this.loadHistory = [];
+    this.data = {
+      history: [],
+      isInitialized: false
+    };
   }
 
   _createClass(LoadStore, [{
     key: 'getLoadSuccess',
     value: function getLoadSuccess(load) {
-      this.loadHistory.push(load);
+      this.data.history.push(load);
+      this.data.isInitialized = true;
     }
   }, {
     key: 'getLoadFail',

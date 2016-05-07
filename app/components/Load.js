@@ -12,7 +12,9 @@ class Load extends React.Component {
   }
 
   onChange(state) {
-    this.setState(state);
+    //High load generated an alert - load = {value}, triggered at {time}
+    
+    this.setState(state.data);
   }
   
   componentDidMount() {
@@ -30,7 +32,7 @@ class Load extends React.Component {
   }
 
   render() {
-    if(this.state.loadHistory.length === 0){
+    if(!this.state.isInitialized){
       return (
         <div className="spinner">
           <img src="/css/images/ajax-loader.gif"  />
@@ -39,21 +41,21 @@ class Load extends React.Component {
     }
       
     var propsData = {
-      data: this.state.loadHistory, 
+      data: this.state.history, 
       x: "time", 
       y: "uptime", 
       title: "Load",
       width: 1000
     };
     
-    var loadHistoryCount = this.state.loadHistory.length;
-    var latestLoad = this.state.loadHistory[loadHistoryCount - 1];
+    var historyCount = this.state.history.length;
+    var latestLoad = this.state.history[historyCount - 1];
     
     return (
-      <div className="load-content">
-          <div className="form-group latest-load">
+      <div className="load-content container-fluid">
+          <div className="form-group latest-load col-md-6">
             <label className="col-sm-2 control-label">Latest Load: </label>
-            <div className="col-sm-10">
+            <div className="col-sm-4">
               <p>{latestLoad.uptime}</p>
             </div>
           </div>

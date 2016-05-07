@@ -4,10 +4,14 @@ import LoadActions from '../actions/loadActions';
 class LoadStore {
   constructor() {
     this.bindActions(LoadActions);
-    this.loadHistory = [];
+    this.data = {
+      history: [],
+      isInitialized: false
+    }
   }
   getLoadSuccess(load){
-    this.loadHistory.push(load);
+    this.data.history.push(load);
+    this.data.isInitialized = true;
   }
 
   getLoadFail(jqXhr){
