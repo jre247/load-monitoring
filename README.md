@@ -11,15 +11,13 @@ System Installation steps:
 
 2) Make sure node is in your system PATH
 
-3) Run the following command in Terminal/Cmd:
-    "npm install bower -g"
+3) Run the following commands in Terminal if you're on a Mac or Command Prompt
+if you're on Windows:
+    a) "npm install bower -g"
+    b) "npm install gulp -g"
     
-4) Make sure bower is in your system PATH
+4) Make sure bower and gulp are in your system PATH
 
-5) Run the following command in Terminal/Cmd:
-    "npm install gulp -g"
-    
-6) Make sure gulp is in your system PATH
 
 -----------------------------------------------------------------------------
 
