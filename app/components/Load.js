@@ -14,17 +14,13 @@ class Load extends React.Component {
   onChange(state) {
     //High load generated an alert - load = {value}, triggered at {time}
     
-    var load = state.load;
-    
-    if(!this.state.history){
-      this.state.history = [];
-    }   
-    this.state.history.push(load);
-    
+    var loads = state;
+    var latestLoad = loads[loads.count - 1];
+   
     this.setState({
-      load: load,
+      latestLoad: state,
       isInitialized: true,
-      history: this.state.history
+      loads: loads
     });
   }
   
@@ -52,7 +48,7 @@ class Load extends React.Component {
     }
       
     var propsData = {
-      data: this.state.history, 
+      data: this.state.loads, 
       x: "time", 
       y: "uptime", 
       title: "Load",
@@ -65,7 +61,7 @@ class Load extends React.Component {
           <div className="form-group latest-load">
             <label className="col-sm-2 control-label">Uptime: </label>
             <div className="col-sm-4">
-              <p>{this.state.load.uptime}</p>
+              <p>{this.state.latestLoad.uptime}</p>
             </div>
           </div>
           

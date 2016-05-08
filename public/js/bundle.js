@@ -430,20 +430,7 @@ var Load = function (_React$Component) {
   _createClass(Load, [{
     key: 'onChange',
     value: function onChange(state) {
-      //High load generated an alert - load = {value}, triggered at {time}
-
-      var load = state.load;
-
-      if (!this.state.history) {
-        this.state.history = [];
-      }
-      this.state.history.push(load);
-
-      this.setState({
-        load: load,
-        isInitialized: true,
-        history: this.state.history
-      });
+      this.setState(state);
     }
   }, {
     key: 'componentDidMount',
@@ -464,7 +451,7 @@ var Load = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      if (!this.state.isInitialized) {
+      if (this.state.loadHistory.length === 0) {
         return _react2.default.createElement(
           'div',
           { className: 'spinner' },
@@ -473,31 +460,34 @@ var Load = function (_React$Component) {
       }
 
       var propsData = {
-        data: this.state.history,
+        data: this.state.loadHistory,
         x: "time",
         y: "uptime",
         title: "Load",
         width: 1000
       };
 
+      var loadHistoryCount = this.state.loadHistory.length;
+      var latestLoad = this.state.loadHistory[loadHistoryCount - 1];
+
       return _react2.default.createElement(
         'div',
-        { className: 'load-content container-fluid' },
+        { className: 'load-content' },
         _react2.default.createElement(
           'div',
           { className: 'form-group latest-load' },
           _react2.default.createElement(
             'label',
             { className: 'col-sm-2 control-label' },
-            'Uptime: '
+            'Latest Load: '
           ),
           _react2.default.createElement(
             'div',
-            { className: 'col-sm-4' },
+            { className: 'col-sm-10' },
             _react2.default.createElement(
               'p',
               null,
-              this.state.load.uptime
+              latestLoad.uptime
             )
           )
         ),
@@ -670,13 +660,13 @@ var LoadStore = function () {
     _classCallCheck(this, LoadStore);
 
     this.bindActions(_loadActions2.default);
-    this.load = {};
+    this.loadHistory = [];
   }
 
   _createClass(LoadStore, [{
     key: 'getLoadSuccess',
     value: function getLoadSuccess(load) {
-      this.load = load;
+      this.loadHistory.push(load);
     }
   }, {
     key: 'getLoadFail',
@@ -14121,7 +14111,7 @@ function series(props, horizontal) {
 },{}],89:[function(require,module,exports){
 !function() {
   var d3 = {
-    version: "3.5.17"
+    version: "3.5.16"
   };
   var d3_arraySlice = [].slice, d3_array = function(list) {
     return d3_arraySlice.call(list);
@@ -17646,7 +17636,7 @@ function series(props, horizontal) {
         λ0 = λ, sinφ0 = sinφ, cosφ0 = cosφ, point0 = point;
       }
     }
-    return (polarAngle < -ε || polarAngle < ε && d3_geo_areaRingSum < -ε) ^ winding & 1;
+    return (polarAngle < -ε || polarAngle < ε && d3_geo_areaRingSum < 0) ^ winding & 1;
   }
   function d3_geo_clipCircle(radius) {
     var cr = Math.cos(radius), smallRadius = cr > 0, notHemisphere = abs(cr) > ε, interpolate = d3_geo_circleInterpolate(radius, 6 * d3_radians);
