@@ -51,7 +51,7 @@ var initializeMonitor = function(io){
       monitor.start();
 
       // more advanced usage with configs.
-      monitor.start({ delay: 3000 // interval in ms between monitor cycles
+      monitor.start({ delay: 10000 // interval in ms between monitor cycles
                     , freemem: 1000000000 // freemem under which event 'freemem' is triggered
                     , uptime: 1000000 // number of secs over which event 'uptime' is triggered
                     , critical1: 0.7 // loadavg1 over which event 'loadavg1' is triggered
@@ -73,9 +73,7 @@ var initializeMonitor = function(io){
           time: time
         }
         
-        io.on('connection', function(socket){
-          io.emit('loadUpdate', { load: viewModel });
-        });
+        io.emit('loadUpdate', { load: viewModel });
         
         
       });
