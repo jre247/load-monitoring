@@ -7,14 +7,11 @@ class LoadStore {
     this.loads = [];
 
   }
-  getLoadSuccess(load){
-    this.loads.push(load);
+  
+  onLoadUpdate(data){
+    this.loads.push(data.load);
   }
 
-  getLoadFail(jqXhr){
-    onsole.log('Load failed.');
-    toastr.error(jqXhr.responseJSON.message);
-  }
 }
 
 export default alt.createStore(LoadStore);

@@ -5,8 +5,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _alt = require('../alt');
 
 var _alt2 = _interopRequireDefault(_alt);
@@ -17,30 +15,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var LoadActions = function () {
-  function LoadActions() {
-    _classCallCheck(this, LoadActions);
+var LoadActions = function LoadActions() {
+  _classCallCheck(this, LoadActions);
 
-    this.generateActions('getLoadSuccess');
-  }
-
-  _createClass(LoadActions, [{
-    key: 'getLoad',
-    value: function getLoad() {
-      var _this = this;
-
-      $.ajax({
-        url: '/api/load'
-      }).done(function (data) {
-        _this.actions.getLoadSuccess(data);
-      }).fail(function (jqXhr) {
-        _this.actions.getLoadFail(jqXhr);
-      });
-    }
-  }]);
-
-  return LoadActions;
-}();
+  this.generateActions('loadUpdate');
+};
 
 exports.default = _alt2.default.createActions(LoadActions);
 
@@ -430,18 +409,27 @@ var Load = function (_React$Component) {
   _createClass(Load, [{
     key: 'onChange',
     value: function onChange(state) {
-      this.setState(state);
+      //High load generated an alert - load = {value}, triggered at {time}
+
+      var loads = state.loads;
+      var latestLoad = loads[loads.length - 1];
+
+      this.setState({
+        latestLoad: latestLoad,
+        isInitialized: true,
+        loads: loads
+      });
     }
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
       _loadStore2.default.listen(this.onChange);
 
-      _loadActions2.default.getLoad();
+      var socket = io();
 
-      setInterval(function () {
-        _loadActions2.default.getLoad();
-      }, this.interval);
+      socket.on('loadUpdate', function (data) {
+        _loadActions2.default.loadUpdate(data);
+      });
     }
   }, {
     key: 'componentWillUnmount',
@@ -451,7 +439,7 @@ var Load = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      if (this.state.loadHistory.length === 0) {
+      if (!this.state.isInitialized) {
         return _react2.default.createElement(
           'div',
           { className: 'spinner' },
@@ -460,34 +448,31 @@ var Load = function (_React$Component) {
       }
 
       var propsData = {
-        data: this.state.loadHistory,
+        data: this.state.loads,
         x: "time",
         y: "uptime",
         title: "Load",
         width: 1000
       };
 
-      var loadHistoryCount = this.state.loadHistory.length;
-      var latestLoad = this.state.loadHistory[loadHistoryCount - 1];
-
       return _react2.default.createElement(
         'div',
-        { className: 'load-content' },
+        { className: 'load-content container-fluid' },
         _react2.default.createElement(
           'div',
           { className: 'form-group latest-load' },
           _react2.default.createElement(
             'label',
             { className: 'col-sm-2 control-label' },
-            'Latest Load: '
+            'Uptime: '
           ),
           _react2.default.createElement(
             'div',
-            { className: 'col-sm-10' },
+            { className: 'col-sm-4' },
             _react2.default.createElement(
               'p',
               null,
-              latestLoad.uptime
+              this.state.latestLoad.uptime
             )
           )
         ),
@@ -660,19 +645,13 @@ var LoadStore = function () {
     _classCallCheck(this, LoadStore);
 
     this.bindActions(_loadActions2.default);
-    this.loadHistory = [];
+    this.loads = [];
   }
 
   _createClass(LoadStore, [{
-    key: 'getLoadSuccess',
-    value: function getLoadSuccess(load) {
-      this.loadHistory.push(load);
-    }
-  }, {
-    key: 'getLoadFail',
-    value: function getLoadFail(jqXhr) {
-      onsole.log('Load failed.');
-      toastr.error(jqXhr.responseJSON.message);
+    key: 'onLoadUpdate',
+    value: function onLoadUpdate(data) {
+      this.loads.push(data.load);
     }
   }]);
 

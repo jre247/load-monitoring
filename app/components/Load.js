@@ -14,24 +14,25 @@ class Load extends React.Component {
   onChange(state) {
     //High load generated an alert - load = {value}, triggered at {time}
     
-    var loads = state;
-    var latestLoad = loads[loads.count - 1];
+    var loads = state.loads;
+    var latestLoad = loads[loads.length - 1];
    
     this.setState({
-      latestLoad: state,
+      latestLoad: latestLoad,
       isInitialized: true,
       loads: loads
     });
   }
   
   componentDidMount() {
-     LoadStore.listen(this.onChange);
-     
-     LoadActions.getLoad();
-     
-     setInterval(function(){
-       LoadActions.getLoad();
-     }, this.interval);  
+    LoadStore.listen(this.onChange);
+
+    var socket = io();
+    
+    socket.on('loadUpdate', (data) => {
+      LoadActions.loadUpdate(data);
+    });
+       
   }
 
   componentWillUnmount() {
